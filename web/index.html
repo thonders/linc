@@ -1,0 +1,44 @@
+<head>
+    <title>Linc</title>
+    <icon src="https://thond.re/logo.png">
+    <meta name="description" content="Linc is a simple URL shortener built for Gurted.">
+    <font name="onest" src="https://fonts.gstatic.com/s/onest/v8/gNMKW3F-SZuj7xmf-HY.woff2" />
+    <script src="script.lua" />
+</head>
+
+<body style="font-onest bg-slate-50 min-h-screen">
+  <div style="min-h-screen py-32">
+    <div style="w-full max-w-md space-y-8 flex flex-col justify-center items-center">
+      <div style="pb-16 space-y-2">
+        <h1 style="text-4xl font-bold tracking-tight text-slate-900 text-center">Linc</h1>
+        <p style="text-slate-600 text-center">Shorten your Gurted URLs with ease</p>
+      </div>
+      <div style="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-6">
+        <form id="form" style="space-y-4">
+          <p style="text-sm font-medium text-slate-700">Enter your Gurt URL</p>
+          <input 
+            id="url" 
+            type="text" 
+            placeholder="gurt://example.web/long-url" 
+            required="true"
+          />
+          <button 
+            type="submit" 
+            id="submit"
+            style="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-2 px-4 rounded-xl shadow-sm transition-colors duration-200 text-sm"
+          >
+            Shorten URL
+          </button>
+        </form>
+        <div style="border-t border-slate-200 pt-4">
+          <div style="bg-slate-50 rounded-xl p-4 min-h-24">
+            <p id="log-output" style="text-sm text-slate-700 font-mono whitespace-pre-wrap"></p>
+          </div>
+        </div>
+      </div>
+      <div style="pt-32">
+        <p style="text-xs text-slate-500 text-center">Built for Gurted • Made with ♥ by Thonder</p>
+      </div>
+    </div>
+  </div>
+</body>
