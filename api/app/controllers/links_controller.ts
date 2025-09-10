@@ -7,8 +7,12 @@ export default class LinksController {
     return randomBytes(3).toString('hex')
   }
 
+  private isValidSlug(slug: string): boolean {
+    return /^[a-zA-Z0-9_-]+$/.test(slug)
+  }
+
   async shorten({ request, response }: HttpContext) {
-    const { url } = request.only(['url'])
+    const { url, slug } = request.only(['url', 'slug'])
 
     if (!url) {
       return response.badRequest({ error: 'URL is required' })
@@ -18,16 +22,28 @@ export default class LinksController {
       return response.badRequest({ error: 'Only gurt:// URLs are supported' })
     }
 
-    const existingLink = await Link.findBy('url', url)
-    if (existingLink) {
-      return response.ok({
-        user: {
-          short_url: existingLink.shortUrl,
-        },
-      })
+    let shortUrl: string
+
+    if (slug) {
+      if (!this.isValidSlug(slug)) {
+        return response.badRequest({
+          error: 'Slug can only contain letters, numbers, hyphens, and underscores',
+        })
+      }
+
+      const existingLink = await Link.findBy('shortUrl', slug)
+      if (existingLink) {
+        return response.conflict({ error: 'Slug is already taken' })
+      }
+
+      shortUrl = slug
+    } else {
+      shortUrl = this.createShortUrl()
+      while (await Link.findBy('shortUrl', shortUrl)) {
+        shortUrl = this.createShortUrl()
+      }
     }
 
-    const shortUrl = this.createShortUrl()
     const link = await Link.create({
       url,
       shortUrl,

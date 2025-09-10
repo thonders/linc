@@ -1,5 +1,6 @@
 local submitBtn = gurt.select('#submit')
 local url_input = gurt.select('#url')
+local slug_input = gurt.select('#slug')
 local log_output = gurt.select('#log-output')
 
 function addLog(message)
@@ -27,6 +28,7 @@ end
 
 submitBtn:on('submit', function(event)
   local url = event.data.url
+  local slug = event.data.slug
 
   clearLog()
   
@@ -36,9 +38,10 @@ submitBtn:on('submit', function(event)
 
   local request_body = JSON.stringify({
     url = url,
+    slug = slug
   })
   
-  local apiUrl = 'http://localhost:3333/api/shorten'
+  local apiUrl = 'http://linc.thond.re/api/shorten'
   local headers = {
     ['Content-Type'] = 'application/json'
   }
