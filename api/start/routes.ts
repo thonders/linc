@@ -14,3 +14,10 @@ router.get('/', async () => {
     hello: 'world',
   }
 })
+
+router
+  .group(() => {
+    router.post('/shorten', '#controllers/links_controller.shorten')
+    router.get('/redirect/:shortUrl', '#controllers/links_controller.redirect')
+  })
+  .prefix('/api')
